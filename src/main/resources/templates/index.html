@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Unblocker</title>
+</head>
+<body>
+<div style="margin-top: 100px;text-align: center; justify-content: center;">
+    <h1>Unblocker  website...</h1>
+    <div style="">
+        <label for="server">please enter your prefer website to unblock:</label><br>
+        <input type="text" id="server" name="server" value="" style=" margin: 10px;">
+    </div>
+    <input id="submit" type="submit" value="Unblock" onclick="run()">
+    <div id="result" style="margin-top: 20px;"></div>
+</div>
+
+<script>
+    function run()
+    {
+        let http = new XMLHttpRequest();
+        let url = '/unblock?url=' + encodeURIComponent(document.getElementById("server").value);
+        http.open('GET', url, true);
+
+
+//Send the proper header information along with the request
+        http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+        http.onreadystatechange = function() {//Call a function when the state changes.
+            if(http.readyState === 4 && http.status === 200) {
+                document.getElementById("result").innerHTML = http.responseText
+                document.getElementById("submit").disabled = false;
+                document.getElementById("submit").value = "Unblock";
+            }
+        }
+        http.send();
+        document.getElementById("submit").disabled = true;
+        document.getElementById("submit").value = "Wait...";
+    }
+</script>
+</body>
+</html>
